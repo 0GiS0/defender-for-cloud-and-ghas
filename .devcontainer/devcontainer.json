@@ -1,9 +1,13 @@
 {
   "name": "defender-for-cloud-and-ghas",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:0-6.0",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/devcontainers/features/copilot-cli:1": {}
+    "ghcr.io/devcontainers/features/copilot-cli:1": {},
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "containerEnv": {
     "ASPNETCORE_ENVIRONMENT": "Development"
@@ -16,7 +20,7 @@
     },
     "8080": {
       "label": "Sensitive Data Web",
-      "onAutoForward": "openBrowser"
+      "onAutoForward": "notify"
     }
   },
   "postCreateCommand": "dotnet restore src/api/SensitiveDataApi.csproj && npm install --prefix src/web",
@@ -28,7 +32,8 @@
         "dbaeumer.vscode-eslint",
         "ms-azuretools.vscode-docker",
         "ms-dotnettools.csdevkit",
-        "mechatroner.rainbow-csv"
+        "mechatroner.rainbow-csv",
+        "HashiCorp.terraform"
       ]
     }
   }
