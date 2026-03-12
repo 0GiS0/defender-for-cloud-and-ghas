@@ -27,7 +27,8 @@
         "Vue.volar",
         "dbaeumer.vscode-eslint",
         "ms-azuretools.vscode-docker",
-        "ms-dotnettools.csdevkit"
+        "ms-dotnettools.csdevkit",
+        "mechatroner.rainbow-csv"
       ]
     }
   }
