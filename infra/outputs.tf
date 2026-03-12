@@ -29,6 +29,16 @@ output "acr_login_server" {
   value       = azurerm_container_registry.main.login_server
 }
 
+output "api_image" {
+  description = "The API image name published to ACR"
+  value       = "${azurerm_container_registry.main.login_server}/${local.api_image_name}"
+}
+
+output "web_image" {
+  description = "The web image name published to ACR"
+  value       = "${azurerm_container_registry.main.login_server}/${local.web_image_name}"
+}
+
 output "acr_admin_username" {
   description = "The admin username for the ACR (insecure - admin account is enabled)"
   value       = azurerm_container_registry.main.admin_username
