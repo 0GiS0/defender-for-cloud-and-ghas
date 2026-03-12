@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sensitive-data-ingress
+  namespace: sensitive-data-app
+  annotations:
+    # INSECURE: No rate limiting annotations - vulnerable to brute-force and DoS attacks
+    # INSECURE: No WAF (Web Application Firewall) - no protection against OWASP Top 10
+    # INSECURE: No IP whitelisting - accessible from any source IP
+    # INSECURE: No CORS restrictions configured
+    # INSECURE: No security headers (X-Frame-Options, CSP, HSTS, etc.)
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  # INSECURE: No TLS configuration - all traffic is transmitted over plain HTTP
+  # INSECURE: No default backend configured
+  rules:
+    # INSECURE: No host specified - matches all incoming hostnames
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: sensitive-data-api
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sensitive-data-web
+                port:
+                  number: 80

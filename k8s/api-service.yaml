@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sensitive-data-api
+  namespace: sensitive-data-app
+  # INSECURE: No annotations for cloud provider security features (e.g., Azure NSG rules)
+spec:
+  # INSECURE: LoadBalancer type exposes the service directly to the internet
+  # INSECURE: No loadBalancerSourceRanges - accessible from any IP address
+  type: LoadBalancer
+  selector:
+    app: sensitive-data-api
+  ports:
+    # INSECURE: Using HTTP (port 80) instead of HTTPS - traffic is unencrypted
+    - protocol: TCP
+      port: 80
+      targetPort: 80

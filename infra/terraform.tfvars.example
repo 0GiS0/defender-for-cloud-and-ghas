@@ -1,0 +1,41 @@
+# =============================================================================
+# Terraform Variables Example - Defender for Cloud & GHAS Security Demo
+# =============================================================================
+# Copy this file to terraform.tfvars and fill in the values.
+#
+#   cp terraform.tfvars.example terraform.tfvars
+#
+# ⚠️  This infrastructure is INTENTIONALLY misconfigured for demo purposes.
+# =============================================================================
+
+# Resource Group name (default: "rg-defender-ghas-demo")
+resource_group_name = "rg-defender-ghas-demo"
+
+# Azure region where all resources will be deployed
+location = "westeurope"
+
+# AKS cluster name
+cluster_name = "aks-vulnerable-demo"
+
+# Storage Account name - must be globally unique, 3-24 chars, lowercase alphanumeric only
+storage_account_name = "stdefenderdemo2024"
+
+# Azure Container Registry name - must be globally unique, 5-50 chars, alphanumeric only
+acr_name = "acrdefenderdemo2024"
+
+# Number of nodes in the AKS cluster (default: 2)
+node_count = 2
+
+# VM size for AKS nodes
+vm_size = "Standard_DS2_v2"
+
+# Kubernetes version - intentionally outdated to trigger Defender findings
+kubernetes_version = "1.27.7"
+
+# Tags applied to all resources
+tags = {
+  Environment = "demo"
+  Purpose     = "security-posture-demo"
+  ManagedBy   = "terraform"
+  Warning     = "intentionally-misconfigured"
+}

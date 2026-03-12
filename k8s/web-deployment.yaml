@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensitive-data-web
+  namespace: sensitive-data-app
+  labels:
+    app: sensitive-data-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensitive-data-web
+  template:
+    metadata:
+      labels:
+        app: sensitive-data-web
+    spec:
+      # INSECURE: automountServiceAccountToken not set to false - exposes service account token to the container
+      # INSECURE: Using default service account - should use a dedicated service account with minimal RBAC
+      # INSECURE: No pod-level securityContext (runAsNonRoot, seccompProfile, etc.)
+      containers:
+        - name: web
+          # INSECURE: Using 'latest' tag - no version pinning, unpredictable deployments
+          image: yourregistry.azurecr.io/sensitive-data-web:latest
+          # INSECURE: No imagePullPolicy specified - defaults vary by tag, may use cached vulnerable images
+          ports:
+            - containerPort: 8080
+          env:
+            # INSECURE: Internal API URL hardcoded - should use service discovery or ConfigMap
+            - name: API_URL
+              value: "http://sensitive-data-api:80"
+            # INSECURE: Secrets as plain text environment variables - should use Kubernetes Secrets or a secrets manager
+            - name: AZURE_STORAGE_CONNECTION_STRING
+              value: "DefaultEndpointsProtocol=https;AccountName=stvulnerabledemo;AccountKey=fake+demo+key==;EndpointSuffix=core.windows.net"
+            # INSECURE: Database credentials in plain text - should use Kubernetes Secrets or Azure Key Vault
+            - name: SQL_CONNECTION_STRING
+              value: "Server=tcp:sql-demo.database.windows.net;Database=customersdb;User ID=sqladmin;Password=P@ssw0rd123!;"
+            # INSECURE: API key exposed in manifest - should use Kubernetes Secrets or external secret store
+            - name: API_KEY
+              value: "sk-demo-fake-api-key-1234567890abcdef"
+            # INSECURE: Session secret in plain text - enables session hijacking if leaked
+            - name: SESSION_SECRET
+              value: "super-secret-session-key-not-for-production"
+          # INSECURE: No resource limits - container can consume all node resources (DoS risk)
+          # INSECURE: No resource requests - scheduler cannot make informed placement decisions
+          # INSECURE: No liveness probe - unhealthy containers won't be restarted
+          # INSECURE: No readiness probe - traffic may be sent to containers not ready to serve
+          securityContext:
+            # INSECURE: Running as root (UID 0) - full access to the container filesystem and processes
+            runAsUser: 0
+            # INSECURE: Privileged container - full access to the host's devices and kernel capabilities
+            privileged: true
+            # INSECURE: Allow privilege escalation - child processes can gain more privileges than parent
+            allowPrivilegeEscalation: true
+            # INSECURE: Writable root filesystem - attackers can modify binaries and install tools
+            readOnlyRootFilesystem: false
+            capabilities:
+              add:
+                # INSECURE: NET_ADMIN capability - allows network configuration changes
+                - NET_ADMIN
+                # INSECURE: SYS_ADMIN capability - near-root-level access to the host
+                - SYS_ADMIN
+                # INSECURE: ALL capabilities - grants every Linux capability to the container
+                - ALL

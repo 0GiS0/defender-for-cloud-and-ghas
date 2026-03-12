@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sensitive-data-app
+  # INSECURE: No resource quotas - allows unbounded resource consumption (DoS risk)
+  # INSECURE: No network policies - all pods can communicate freely (lateral movement risk)
+  # INSECURE: No pod security standards labels - no enforcement of security baselines
+  # INSECURE: No LimitRange - containers can request unlimited CPU/memory

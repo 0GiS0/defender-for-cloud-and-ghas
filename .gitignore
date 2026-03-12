@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.npm
+
+# Build outputs
+dist/
+bin/
+obj/
+publish/
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*.swo
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!terraform.tfvars.example
+.terraform.lock.hcl
+
+# .NET
+*.user
+*.suo
+
+# Environment
+.env
+.env.local

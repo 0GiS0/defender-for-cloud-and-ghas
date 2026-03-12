@@ -1,0 +1,22 @@
+{
+  "name": "sensitive-data-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.0",
+    "vue-router": "^4.0.0",
+    "axios": "0.21.1",
+    "lodash": "4.17.20",
+    "moment": "2.29.1",
+    "dompurify": "2.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0"
+  }
+}

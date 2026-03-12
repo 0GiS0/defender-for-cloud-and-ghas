@@ -1,0 +1,52 @@
+# WARNING: This file contains FICTITIOUS data for security testing purposes only
+id,first_name,last_name,email,phone,dni,ssn,address,city,country,date_of_birth,credit_score
+1,María,García López,maria.garcia@example.com,+34 612 345 678,12345678A,900-12-3456,Calle Ficticia 12 3ºB,Madrid,Spain,1985-03-14,720
+2,James,Thompson,james.thompson@test.com,+1 555-0101,23456789B,900-23-4567,742 Evergreen Terrace,Springfield,USA,1990-07-22,680
+3,Carmen,Rodríguez Fernández,carmen.rodriguez@example.com,+34 623 456 789,34567890C,900-34-5678,Avenida Inventada 45,Barcelona,Spain,1978-11-05,755
+4,Emily,Johnson,emily.johnson@test.com,+1 555-0102,45678901D,900-45-6789,123 Fake Street,New York,USA,1992-01-30,810
+5,Pablo,Martínez Sánchez,pablo.martinez@example.com,+34 634 567 890,56789012E,900-56-7890,Plaza Imaginaria 7,Valencia,Spain,1983-06-18,690
+6,Sarah,Williams,sarah.williams@test.com,+1 555-0103,67890123F,900-67-8901,456 Nowhere Blvd,Los Angeles,USA,1995-09-12,740
+7,Alejandro,López Díaz,alejandro.lopez@example.com,+34 645 678 901,78901234G,900-78-9012,Calle Falsa 88,Sevilla,Spain,1988-02-28,660
+8,Michael,Brown,michael.brown@test.com,+1 555-0104,89012345H,900-89-0123,789 Phantom Ave,Chicago,USA,1981-12-03,790
+9,Lucía,Hernández Ruiz,lucia.hernandez@example.com,+34 656 789 012,90123456J,900-90-1234,Paseo Ficticio 23,Bilbao,Spain,1993-04-17,710
+10,David,Miller,david.miller@test.com,+1 555-0105,01234567K,900-01-2345,321 Illusion Rd,Houston,USA,1976-08-25,830
+11,Ana,González Moreno,ana.gonzalez@example.com,+34 667 890 123,11223344L,900-11-2233,Ronda Inventada 56,Málaga,Spain,1991-05-09,675
+12,Robert,Davis,robert.davis@test.com,+1 555-0106,22334455M,900-22-3344,654 Fantasy Lane,Phoenix,USA,1984-10-14,720
+13,Isabel,Muñoz Álvarez,isabel.munoz@example.com,+34 678 901 234,33445566N,900-33-4455,Calle Soñada 34,Zaragoza,Spain,1997-01-21,640
+14,Jennifer,Wilson,jennifer.wilson@test.com,+1 555-0107,44556677P,900-44-5566,987 Mirage Court,Philadelphia,USA,1989-07-07,760
+15,Fernando,Romero Gil,fernando.romero@example.com,+34 689 012 345,55667788Q,900-55-6677,Avenida Quimérica 89,Murcia,Spain,1982-03-30,700
+16,Jessica,Taylor,jessica.taylor@test.com,+1 555-0108,66778899R,900-66-7788,246 Phantom Plaza,San Antonio,USA,1994-11-16,785
+17,Raúl,Jiménez Torres,raul.jimenez@example.com,+34 690 123 456,77889900S,900-77-8899,Calle Utópica 67,Palma,Spain,1986-08-02,650
+18,Christopher,Anderson,christopher.anderson@test.com,+1 555-0109,88990011T,900-88-9900,135 Dreamland Ave,San Diego,USA,1979-04-19,815
+19,Elena,Navarro Vega,elena.navarro@example.com,+34 601 234 567,99001122V,900-99-0011,Plaza Ilusoria 12,Las Palmas,Spain,1996-12-08,730
+20,Matthew,Thomas,matthew.thomas@test.com,+1 555-0110,00112233W,900-00-1122,864 Mirage St,Dallas,USA,1987-06-25,695
+21,Sofía,Serrano Castro,sofia.serrano@example.com,+34 612 345 001,10203040X,900-10-2030,Calle Fantasía 5,Alicante,Spain,1993-02-14,750
+22,Daniel,Jackson,daniel.jackson@test.com,+1 555-0111,20304050Y,900-20-3040,753 Illusion Way,San Jose,USA,1980-09-01,670
+23,Cristina,Díaz Molina,cristina.diaz@example.com,+34 623 456 002,30405060Z,900-30-4050,Avenida Ficticia 101,Córdoba,Spain,1991-07-19,800
+24,Andrew,White,andrew.white@test.com,+1 555-0112,40506070A,900-40-5060,159 Fantasy Blvd,Austin,USA,1985-01-11,625
+25,Patricia,Ruiz Ortega,patricia.ruiz@example.com,+34 634 567 003,50607080B,900-50-6070,Paseo Imaginario 78,Valladolid,Spain,1998-10-03,715
+26,Joshua,Harris,joshua.harris@test.com,+1 555-0113,60708090C,900-60-7080,357 Nowhere Dr,Jacksonville,USA,1977-05-27,840
+27,Laura,Morales Guerrero,laura.morales@example.com,+34 645 678 004,70809010D,900-70-8090,Calle Irreal 43,Vigo,Spain,1990-08-15,680
+28,Kevin,Martin,kevin.martin@test.com,+1 555-0114,80901020E,900-80-9010,951 Phantom Hill,Fort Worth,USA,1983-12-22,770
+29,Marta,Blanco Prieto,marta.blanco@example.com,+34 656 789 005,91020304F,900-91-0203,Ronda Soñada 16,Gijón,Spain,1995-03-06,645
+30,Ryan,Garcia,ryan.garcia@test.com,+1 555-0115,02030405G,900-02-0304,753 Dreamscape Rd,Columbus,USA,1988-11-18,735
+31,Teresa,Iglesias Cano,teresa.iglesias@example.com,+34 667 890 006,13141516H,900-13-1415,Avenida Utópica 92,Hospitalet,Spain,1982-07-04,705
+32,Brandon,Robinson,brandon.robinson@test.com,+1 555-0116,24252627J,900-24-2526,468 Illusion Park,Charlotte,USA,1994-04-29,780
+33,Rocío,Fuentes Ramos,rocio.fuentes@example.com,+34 678 901 007,35363738K,900-35-3637,Calle Inventada 55,Vitoria,Spain,1987-09-13,660
+34,Justin,Clark,justin.clark@test.com,+1 555-0117,46474849L,900-46-4748,246 Phantom Crest,San Francisco,USA,1992-02-08,820
+35,Beatriz,Ortega Lozano,beatriz.ortega@example.com,+34 689 012 008,57585960M,900-57-5859,Plaza Fantástica 8,Elche,Spain,1979-06-21,690
+36,Tyler,Lewis,tyler.lewis@test.com,+1 555-0118,68697071N,900-68-6970,864 Fantasy Hills,Indianapolis,USA,1996-10-31,740
+37,Pilar,Delgado Peña,pilar.delgado@example.com,+34 690 123 009,79808182P,900-79-8081,Paseo Quimérico 37,Oviedo,Spain,1984-01-16,675
+38,Aaron,Walker,aaron.walker@test.com,+1 555-0119,80919293Q,900-80-9192,159 Dreamworld Ave,Seattle,USA,1981-08-09,810
+39,Nuria,Santos Rubio,nuria.santos@example.com,+34 601 234 010,91020394R,900-91-0293,Calle Ilusoria 71,Santander,Spain,1993-05-24,720
+40,Zachary,Hall,zachary.hall@test.com,+1 555-0120,02130405S,900-02-1304,753 Mirage Garden,Denver,USA,1986-12-15,695
+41,Adriana,Cruz Domínguez,adriana.cruz@example.com,+34 612 345 011,13243546T,900-13-2435,Ronda Fantasiosa 19,Pamplona,Spain,1990-03-28,755
+42,Nathan,Young,nathan.young@test.com,+1 555-0121,24354657V,900-24-3546,357 Phantom Ridge,Washington,USA,1978-07-12,635
+43,Silvia,Vázquez Herrera,silvia.vazquez@example.com,+34 623 456 012,35465768W,900-35-4657,Avenida Soñadora 63,Cartagena,Spain,1997-09-05,785
+44,Ethan,King,ethan.king@test.com,+1 555-0122,46576879X,900-46-5768,951 Fantasy Meadow,Nashville,USA,1985-04-20,710
+45,Dolores,Marín Gallego,dolores.marin@example.com,+34 634 567 013,57687980Y,900-57-6879,Calle Quimérica 28,Jerez,Spain,1983-11-07,670
+46,Jacob,Wright,jacob.wright@test.com,+1 555-0123,68798091Z,900-68-7980,246 Illusion Terrace,El Paso,USA,1991-06-14,800
+47,Rosa,Medina Caballero,rosa.medina@example.com,+34 645 678 014,79890102A,900-79-8901,Plaza Irreal 41,Salamanca,Spain,1989-02-01,650
+48,Nicholas,Scott,nicholas.scott@test.com,+1 555-0124,80901213B,900-80-9012,135 Dreamview Ct,Detroit,USA,1976-10-23,845
+49,Inés,Flores Vargas,ines.flores@example.com,+34 656 789 015,91012324C,900-91-0123,Paseo Inventado 84,Burgos,Spain,1994-08-11,725
+50,Alexander,Green,alexander.green@test.com,+1 555-0125,02123435D,900-02-1234,864 Phantom Gardens,Memphis,USA,1980-05-06,760

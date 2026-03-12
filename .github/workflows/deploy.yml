@@ -1,0 +1,34 @@
+name: Deploy to AKS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Get AKS credentials
+        uses: azure/aks-set-context@v3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.CLUSTER_NAME }}
+
+      - name: Replace image tags in manifests
+        run: |
+          sed -i "s|yourregistry.azurecr.io|${{ secrets.ACR_LOGIN_SERVER }}|g" k8s/*.yaml
+
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f k8s/
+
+      # NOTE: This deployment is intentionally simple for demo purposes.
+      # In production you would use proper GitOps (e.g., Flux or Argo CD),
+      # image scanning in the CI pipeline, and an admission controller
+      # (e.g., Azure Policy / Gatekeeper) to enforce security policies.
