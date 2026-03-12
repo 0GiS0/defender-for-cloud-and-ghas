@@ -1,6 +1,10 @@
 # 🛡️ Defender for Cloud & GitHub Advanced Security - Demo
 
-> Demo de integración entre **Microsoft Defender for Cloud** y **GitHub Advanced Security (GHAS)** para detección de vulnerabilidades end-to-end: desde el código fuente hasta la infraestructura en Azure.
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC140iBrEZbOtvxWsJ-Tb0lQ?style=for-the-badge&logo=youtube&logoColor=white&color=red)](https://www.youtube.com/c/GiselaTorres?sub_confirmation=1) [![GitHub followers](https://img.shields.io/github/followers/0GiS0?style=for-the-badge&logo=github&logoColor=white)](https://github.com/0GiS0) [![LinkedIn Follow](https://img.shields.io/badge/LinkedIn-Sígueme-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/giselatorresbuitrago/) [![X Follow](https://img.shields.io/badge/X-Sígueme-black?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/0GiS0)
+
+---
+
+¡Hola developer 👋🏻! Este repositorio es una demo de integración entre **Microsoft Defender for Cloud** y **GitHub Advanced Security (GHAS)** para detección de vulnerabilidades end-to-end: desde el código fuente hasta la infraestructura en Azure.
 
 ⚠️ **ADVERTENCIA**: Este repositorio contiene código y configuraciones **intencionalmente vulnerables** con fines educativos y de demostración. **NO utilizar en producción.**
 
@@ -442,3 +446,11 @@ Para una guía paso a paso de cómo realizar la demostración, consulta:
 > ```
 >
 > **Todos los datos, credenciales y claves incluidas son ficticias y creadas exclusivamente para esta demo.**
+
+---
+
+## 🌐 Sígueme en Mis Redes Sociales
+
+Si te ha gustado este proyecto y quieres ver más contenido como este, no olvides suscribirte a mi canal de YouTube y seguirme en mis redes sociales:
+
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC140iBrEZbOtvxWsJ-Tb0lQ?style=for-the-badge&logo=youtube&logoColor=white&color=red)](https://www.youtube.com/c/GiselaTorres?sub_confirmation=1) [![GitHub followers](https://img.shields.io/github/followers/0GiS0?style=for-the-badge&logo=github&logoColor=white)](https://github.com/0GiS0) [![LinkedIn Follow](https://img.shields.io/badge/LinkedIn-Sígueme-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/giselatorresbuitrago/) [![X Follow](https://img.shields.io/badge/X-Sígueme-black?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/0GiS0)
