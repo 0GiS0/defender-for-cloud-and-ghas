@@ -23,14 +23,17 @@ storage_account_name = "stdefenderdemo2024"
 # Azure Container Registry name - must be globally unique, 5-50 chars, alphanumeric only
 acr_name = "acrdefenderdemo2024"
 
-# Number of nodes in the AKS cluster (default: 2)
-node_count = 2
+# Number of nodes in the AKS cluster (default: 1)
+node_count = 1
 
 # VM size for AKS nodes
-vm_size = "Standard_DS2_v2"
+vm_size = "Standard_B2s"
 
-# Kubernetes version - intentionally outdated to trigger Defender findings
-kubernetes_version = "1.27.7"
+# OS disk size in GB for AKS nodes
+os_disk_size_gb = 30
+
+# Kubernetes version - pinned to a supported version so the demo remains deployable
+kubernetes_version = "1.32.10"
 
 # Tags applied to all resources
 tags = {

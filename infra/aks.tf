@@ -12,6 +12,15 @@ resource "azurerm_kubernetes_cluster" "main" {
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
   dns_prefix          = var.cluster_name
+  sku_tier            = "Free"
+
+  lifecycle {
+    ignore_changes = [
+      api_server_access_profile,
+      default_node_pool[0].upgrade_settings,
+      microsoft_defender,
+    ]
+  }
 
   # INSECURE: Using an outdated Kubernetes version with known vulnerabilities
   # Defender Finding: "Kubernetes Services should be upgraded to a non-vulnerable Kubernetes version"
@@ -21,6 +30,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     name       = "default"
     node_count = var.node_count
     vm_size    = var.vm_size
+    os_disk_size_gb = var.os_disk_size_gb
 
     # INSECURE: Auto-scaling is disabled - no resilience to load spikes
     # Defender Finding: "Kubernetes cluster should use auto-scaling"
@@ -35,10 +45,8 @@ resource "azurerm_kubernetes_cluster" "main" {
   # Defender Finding: "Role-Based Access Control should be used on Kubernetes Services"
   role_based_access_control_enabled = false
 
-  # INSECURE: HTTP application routing is enabled (deprecated and insecure)
-  # This addon exposes services without TLS and is not recommended
-  # Defender Finding: "Kubernetes clusters should not use the default namespace"
-  http_application_routing_enabled = true
+  # NOTE: The legacy HTTP application routing add-on is no longer supported
+  # for new AKS clusters by Azure, so it cannot be enabled in current subscriptions.
 
   network_profile {
     # INSECURE: Using kubenet instead of Azure CNI

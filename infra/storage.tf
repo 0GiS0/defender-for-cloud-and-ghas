@@ -72,7 +72,7 @@ resource "azurerm_storage_account" "main" {
 # Defender Finding: "Storage containers should not have public access"
 resource "azurerm_storage_container" "sensitive_data" {
   name                  = "sensitive-data"
-  storage_account_id    = azurerm_storage_account.main.id
+  storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "blob"
 }
 
@@ -81,7 +81,7 @@ resource "azurerm_storage_container" "sensitive_data" {
 # Defender Finding: "Storage containers should not have public access"
 resource "azurerm_storage_container" "reports" {
   name                  = "reports"
-  storage_account_id    = azurerm_storage_account.main.id
+  storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "container"
 }
 

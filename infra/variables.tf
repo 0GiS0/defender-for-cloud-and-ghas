@@ -43,21 +43,27 @@ variable "acr_name" {
 variable "node_count" {
   description = "Number of nodes in the AKS default node pool"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "vm_size" {
   description = "VM size for AKS nodes"
   type        = string
-  default     = "Standard_DS2_v2"
+  default     = "Standard_B2s"
+}
+
+variable "os_disk_size_gb" {
+  description = "OS disk size for AKS nodes"
+  type        = number
+  default     = 30
 }
 
 variable "kubernetes_version" {
-  description = "Kubernetes version for AKS - intentionally outdated to trigger Defender findings"
+  description = "Kubernetes version for AKS - pinned to a supported version so the demo remains deployable"
   type        = string
-  default     = "1.27.7"
-  # INSECURE: Using an outdated Kubernetes version with known CVEs
-  # Defender Finding: "Kubernetes Services should be upgraded to a non-vulnerable Kubernetes version"
+  default     = "1.32.10"
+  # NOTE: The original demo version is no longer accepted for new clusters in West Europe.
+  # This keeps the demo deployable on the standard support plan in current subscriptions.
 }
 
 variable "tags" {
