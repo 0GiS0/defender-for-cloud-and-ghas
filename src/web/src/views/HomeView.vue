@@ -44,13 +44,17 @@ export default {
     const config = eval('(' + configStr + ')')
 
     // INSECURE: Using HTTP instead of HTTPS
-    const apiUrl = window.__APP_CONFIG__?.apiUrl || 'http://localhost:5000'
+    const apiUrl = window.__APP_CONFIG__?.apiUrl || '/api'
 
     try {
-      const customersRes = await axios.get(`${apiUrl}/api/customers`)
+      const customersRes = await axios.get(`${apiUrl}/customers`)
       this.customerCount = customersRes.data.length
 
-      const transactionsRes = await axios.get(`${apiUrl}/api/transactions`)
+      const transactionsRes = await axios.get(`${apiUrl}/transactions`, {
+        headers: {
+          'X-Api-Key': API_KEY
+        }
+      })
       this.transactionCount = transactionsRes.data.transactions?.length || 0
     } catch (err) {
       console.error(err)

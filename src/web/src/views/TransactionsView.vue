@@ -67,12 +67,12 @@ export default {
     }
   },
   async mounted() {
-    const apiUrl = window.__APP_CONFIG__?.apiUrl || 'http://localhost:5000'
+    const apiUrl = window.__APP_CONFIG__?.apiUrl || '/api'
     // INSECURE: Sending API key in URL
     const apiKey = window.__APP_CONFIG__?.apiKey || ''
 
     try {
-      const response = await axios.get(`${apiUrl}/api/transactions`, {
+      const response = await axios.get(`${apiUrl}/transactions`, {
         headers: {
           'X-Api-Key': apiKey,
           // INSECURE: Hardcoded auth header

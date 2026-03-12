@@ -1,0 +1,34 @@
+{
+  "name": "defender-for-cloud-and-ghas",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:0-6.0",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/copilot-cli:1": {}
+  },
+  "containerEnv": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  },
+  "forwardPorts": [5000, 8080],
+  "portsAttributes": {
+    "5000": {
+      "label": "Sensitive Data API",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Sensitive Data Web",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "dotnet restore src/api/SensitiveDataApi.csproj && npm install --prefix src/web",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "Vue.volar",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-docker",
+        "ms-dotnettools.csdevkit"
+      ]
+    }
+  }
+}

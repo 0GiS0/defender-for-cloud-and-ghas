@@ -255,6 +255,72 @@ defender-for-cloud-and-ghas/
 
 ---
 
+## 💻 Desarrollo local con Dev Container
+
+Si no tienes **.NET 6** instalado en tu máquina, puedes ejecutar todo el proyecto dentro del contenedor de desarrollo incluido en el repositorio.
+
+### 1️⃣ Abrir el repositorio en el contenedor
+
+1. Instala Docker Desktop.
+2. Instala la extensión **Dev Containers** en VS Code.
+3. Abre el repositorio en VS Code.
+4. Ejecuta **Dev Containers: Reopen in Container**.
+
+El contenedor instala automáticamente:
+
+- **.NET SDK 6.0**
+- **Node.js 18**
+- Dependencias NuGet y npm del proyecto
+
+### 2️⃣ Levantar todo con un solo comando
+
+Desde una terminal dentro del contenedor:
+
+```bash
+bash scripts/start-local.sh
+```
+
+Ese script:
+
+- restaura la API
+- instala dependencias del frontend
+- arranca la API en `http://localhost:5000`
+- arranca el frontend en `http://localhost:8080`
+- detiene ambos procesos al hacer `Ctrl+C`
+
+### 3️⃣ Levantar la API
+
+Desde una terminal dentro del contenedor:
+
+```bash
+dotnet run --project src/api/SensitiveDataApi.csproj --urls http://0.0.0.0:5000
+```
+
+La API quedará disponible en `http://localhost:5000`.
+
+> En entorno `Development`, la API usa automáticamente los ficheros de `data/` del repositorio para que puedas probar la demo sin Azure Storage.
+
+### 4️⃣ Levantar el frontend
+
+En otra terminal dentro del contenedor:
+
+```bash
+cd src/web
+npm run dev -- --host 0.0.0.0 --port 8080
+```
+
+El frontend quedará disponible en `http://localhost:8080`.
+
+### 5️⃣ Probar la aplicación
+
+- Inicio: `http://localhost:8080`
+- Clientes: `http://localhost:8080/customers`
+- Transacciones: `http://localhost:8080/transactions`
+
+El frontend ya viene configurado para hacer proxy de `/api` contra `http://localhost:5000`.
+
+---
+
 ## ⚙️ Despliegue
 
 ### 1️⃣ Clonar el repositorio

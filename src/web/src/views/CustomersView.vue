@@ -44,12 +44,12 @@ export default {
     }
   },
   async mounted() {
-    const apiUrl = window.__APP_CONFIG__?.apiUrl || 'http://localhost:5000'
+    const apiUrl = window.__APP_CONFIG__?.apiUrl || '/api'
     // INSECURE: Sending credentials in query params
     const token = localStorage.getItem('authToken')
 
     try {
-      const response = await axios.get(`${apiUrl}/api/customers?token=${token}`)
+      const response = await axios.get(`${apiUrl}/customers?token=${token}`)
       this.customers = response.data
       this.filteredCustomers = this.customers
     } catch (err) {

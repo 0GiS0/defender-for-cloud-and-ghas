@@ -3,6 +3,7 @@ using Azure.Storage.Blobs;
 using SensitiveDataApi.Models;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace SensitiveDataApi.Controllers;
 
@@ -12,6 +13,7 @@ public class TransactionsController : ControllerBase
 {
     private readonly ILogger<TransactionsController> _logger;
     private readonly IConfiguration _configuration;
+    private readonly IWebHostEnvironment _environment;
 
     // INSECURE: Hardcoded API key
     private const string HardcodedApiKey = "sk-demo-fake-api-key-1234567890abcdef";
@@ -19,10 +21,11 @@ public class TransactionsController : ControllerBase
     // INSECURE: Hardcoded connection string
     private const string BackupConnectionString = "DefaultEndpointsProtocol=https;AccountName=stvulnerabledemo;AccountKey=fake+demo+key+not+real+base64==;EndpointSuffix=core.windows.net";
 
-    public TransactionsController(ILogger<TransactionsController> logger, IConfiguration configuration)
+    public TransactionsController(ILogger<TransactionsController> logger, IConfiguration configuration, IWebHostEnvironment environment)
     {
         _logger = logger;
         _configuration = configuration;
+        _environment = environment;
     }
 
     [HttpGet]
@@ -36,20 +39,7 @@ public class TransactionsController : ControllerBase
 
         try
         {
-            var connectionString = _configuration["ConnectionStrings:StorageAccount"] ?? BackupConnectionString;
-            var blobServiceClient = new BlobServiceClient(connectionString);
-            var containerClient = blobServiceClient.GetBlobContainerClient("sensitive-data");
-            var blobClient = containerClient.GetBlobClient("transactions.json");
-
-            var response = await blobClient.DownloadContentAsync();
-            var jsonContent = response.Value.Content.ToString();
-
-            // INSECURE: Deserializing with TypeNameHandling.All
-            var settings = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All
-            };
-            var wrapper = JsonConvert.DeserializeObject<TransactionWrapper>(jsonContent, settings);
+            var wrapper = await LoadTransactionsWrapperAsync();
 
             // INSECURE: Returns full card numbers and CVVs without masking
             return Ok(wrapper);
@@ -69,7 +59,7 @@ public class TransactionsController : ControllerBase
             return Unauthorized(new { error = "Invalid API key" });
         }
 
-        var transactions = await GetTransactionsFromStorage();
+        var transactions = await LoadTransactionsAsync();
         var transaction = transactions.FirstOrDefault(t => t.TransactionId == transactionId);
 
         if (transaction == null)
@@ -128,7 +118,7 @@ public class TransactionsController : ControllerBase
     public async Task<IActionResult> GetByCustomer(int customerId)
     {
         // INSECURE: No authentication required for this endpoint
-        var transactions = await GetTransactionsFromStorage();
+        var transactions = await LoadTransactionsAsync();
         var customerTransactions = transactions.Where(t => t.CustomerId == customerId).ToList();
 
         // INSECURE: Returns full card details without masking
@@ -166,22 +156,68 @@ public class TransactionsController : ControllerBase
         return Ok(new { filename = filename, content = content });
     }
 
-    private async Task<List<Transaction>> GetTransactionsFromStorage()
+    private async Task<List<Transaction>> LoadTransactionsAsync()
+    {
+        var wrapper = await LoadTransactionsWrapperAsync();
+        return wrapper?.Transactions ?? new List<Transaction>();
+    }
+
+    private async Task<TransactionWrapper?> LoadTransactionsWrapperAsync()
+    {
+        var localFilePath = GetLocalDataFilePath("transactions.json");
+        if (localFilePath != null)
+        {
+            var jsonContent = await System.IO.File.ReadAllTextAsync(localFilePath);
+
+            var localSettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new SnakeCaseNamingStrategy()
+                }
+            };
+
+            return JsonConvert.DeserializeObject<TransactionWrapper>(jsonContent, localSettings);
+        }
+
+        return await GetTransactionsFromStorageAsync();
+    }
+
+    private string? GetLocalDataFilePath(string fileName)
+    {
+        if (!_environment.IsDevelopment())
+        {
+            return null;
+        }
+
+        var configuredDataPath = _configuration["LocalDataPath"];
+        var dataDirectory = string.IsNullOrWhiteSpace(configuredDataPath)
+            ? Path.GetFullPath(Path.Combine(_environment.ContentRootPath, "..", "..", "data"))
+            : Path.GetFullPath(Path.IsPathRooted(configuredDataPath)
+                ? configuredDataPath
+                : Path.Combine(_environment.ContentRootPath, configuredDataPath));
+
+        var filePath = Path.Combine(dataDirectory, fileName);
+        return System.IO.File.Exists(filePath) ? filePath : null;
+    }
+
+    private async Task<TransactionWrapper?> GetTransactionsFromStorageAsync()
     {
         var connectionString = _configuration["ConnectionStrings:StorageAccount"] ?? BackupConnectionString;
         var blobServiceClient = new BlobServiceClient(connectionString);
         var containerClient = blobServiceClient.GetBlobContainerClient("sensitive-data");
         var blobClient = containerClient.GetBlobClient("transactions.json");
 
-        var response = await blobClient.DownloadContentAsync();
-        var jsonContent = response.Value.Content.ToString();
+        var response = await blobClient.DownloadAsync();
+        using var reader = new StreamReader(response.Value.Content);
+        var jsonContent = await reader.ReadToEndAsync();
 
         var settings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.All
         };
         var wrapper = JsonConvert.DeserializeObject<TransactionWrapper>(jsonContent, settings);
-
-        return wrapper?.Transactions ?? new List<Transaction>();
+        return wrapper;
     }
 }
