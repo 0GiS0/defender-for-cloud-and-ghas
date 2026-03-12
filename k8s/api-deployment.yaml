@@ -22,16 +22,16 @@ spec:
       containers:
         - name: api
           # INSECURE: Using 'latest' tag - no version pinning, unpredictable deployments
-          image: yourregistry.azurecr.io/sensitive-data-api:latest
+          image: acrdefdemo260312152110.azurecr.io/sensitive-data-api:latest
           # INSECURE: No imagePullPolicy specified - defaults vary by tag, may use cached vulnerable images
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           env:
             # INSECURE: Secrets as plain text environment variables - should use Kubernetes Secrets or a secrets manager
-            - name: AZURE_STORAGE_CONNECTION_STRING
-              value: "DefaultEndpointsProtocol=https;AccountName=stvulnerabledemo;AccountKey=fake+demo+key==;EndpointSuffix=core.windows.net"
+            - name: ConnectionStrings__StorageAccount
+              value: "DefaultEndpointsProtocol=https;AccountName=stdefdemo260312152110;AccountKey=uTZvuP14eXTszO27ooij2qDrJWdTQNvxWSiYSTZTKr4XgZbCvSgntkqrEcJCPNGzMrsZEBOduKzV+AStcZYkCw==;EndpointSuffix=core.windows.net"
             # INSECURE: Database credentials in plain text - should use Kubernetes Secrets or Azure Key Vault
-            - name: SQL_CONNECTION_STRING
+            - name: ConnectionStrings__SqlDatabase
               value: "Server=tcp:sql-demo.database.windows.net;Database=customersdb;User ID=sqladmin;Password=P@ssw0rd123!;"
             # INSECURE: API key exposed in manifest - should use Kubernetes Secrets or external secret store
             - name: API_KEY

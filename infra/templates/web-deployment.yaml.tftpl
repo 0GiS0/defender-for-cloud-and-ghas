@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensitive-data-web
+  namespace: sensitive-data-app
+  labels:
+    app: sensitive-data-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensitive-data-web
+  template:
+    metadata:
+      labels:
+        app: sensitive-data-web
+    spec:
+      containers:
+        - name: web
+          image: ${web_image}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: API_URL
+              value: "http://sensitive-data-api:80"
+            - name: ConnectionStrings__StorageAccount
+              value: "${storage_connection_string}"
+            - name: ConnectionStrings__SqlDatabase
+              value: "${sql_connection_string}"
+            - name: API_KEY
+              value: "sk-demo-fake-api-key-1234567890abcdef"
+            - name: SESSION_SECRET
+              value: "super-secret-session-key-not-for-production"
+          securityContext:
+            runAsUser: 0
+            privileged: true
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_ADMIN
+                - ALL
