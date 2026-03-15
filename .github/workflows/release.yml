@@ -15,30 +15,48 @@ permissions:
   contents: read
 
 jobs:
+  resolve-tag:
+    name: 🧭 Resolve release tag
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.resolve.outputs.image_tag }}
+    steps:
+      - name: Determine image tag
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "image_tag=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "image_tag=${{ github.event.inputs.image_tag }}" >> "$GITHUB_OUTPUT"
+          fi
+
   build-api:
     name: 🐳 Publish API image
+    needs: resolve-tag
     uses: ./.github/workflows/build-image-reusable.yml
     with:
       image_name: sensitive-data-api
       build_context: ./src/api
-      image_tag: ${{ github.event_name == 'push' && github.ref_name || inputs.image_tag }}
+      image_tag: ${{ needs.resolve-tag.outputs.image_tag }}
     secrets: inherit
 
   build-web:
     name: 🐳 Publish Web image
+    needs: resolve-tag
     uses: ./.github/workflows/build-image-reusable.yml
     with:
       image_name: sensitive-data-web
       build_context: ./src/web
-      image_tag: ${{ github.event_name == 'push' && github.ref_name || inputs.image_tag }}
+      image_tag: ${{ needs.resolve-tag.outputs.image_tag }}
     secrets: inherit
 
   deploy:
     name: 🚀 Deploy tagged release
     needs:
+      - resolve-tag
       - build-api
       - build-web
     uses: ./.github/workflows/deploy.yml
     with:
-      image_tag: ${{ github.event_name == 'push' && github.ref_name || inputs.image_tag }}
+      image_tag: ${{ needs.resolve-tag.outputs.image_tag }}
     secrets: inherit
