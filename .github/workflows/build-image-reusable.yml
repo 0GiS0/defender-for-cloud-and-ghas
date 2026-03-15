@@ -17,7 +17,6 @@ permissions:
   actions: read
   id-token: write
   attestations: write
-  artifact-metadata: write
   security-events: write
 
 jobs:
