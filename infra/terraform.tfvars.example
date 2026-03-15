@@ -8,20 +8,20 @@
 # ⚠️  This infrastructure is INTENTIONALLY misconfigured for demo purposes.
 # =============================================================================
 
-# Resource Group name (default: "rg-defender-ghas-demo")
-resource_group_name = "rg-defender-ghas-demo"
+# Resource Group name
+resource_group_name = "rg-contoso-payments-demo-we"
 
 # Azure region where all resources will be deployed
 location = "westeurope"
 
 # AKS cluster name
-cluster_name = "aks-vulnerable-demo"
+cluster_name = "aks-contoso-payments-demo"
 
 # Storage Account name - must be globally unique, 3-24 chars, lowercase alphanumeric only
-storage_account_name = "stdefenderdemo2024"
+storage_account_name = "stcontosopaydemo260315"
 
 # Azure Container Registry name - must be globally unique, 5-50 chars, alphanumeric only
-acr_name = "acrdefenderdemo2024"
+acr_name = "acrcontosopaydemo260315"
 
 # Number of nodes in the AKS cluster (default: 1)
 node_count = 1
@@ -41,4 +41,6 @@ tags = {
   Purpose     = "security-posture-demo"
   ManagedBy   = "terraform"
   Warning     = "intentionally-misconfigured"
+  Application = "contoso-payments"
+  Owner       = "platform-security"
 }

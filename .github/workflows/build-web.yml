@@ -1,10 +1,6 @@
 name: 🌐 Build & Push Web
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'src/web/**'
   pull_request:
     branches: [main]
     paths:
@@ -14,7 +10,7 @@ on:
 jobs:
   validate-build:
     name: 🧪 Validate Web image build
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
@@ -28,15 +24,6 @@ jobs:
         with:
           context: ./src/web
           push: false
-          tags: sensitive-data-web:pr-${{ github.event.pull_request.number }}
+          tags: sensitive-data-web:${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'manual-validation' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  build-and-push:
-    name: 🐳 Build and Push Web image
-    if: github.event_name != 'pull_request'
-    uses: ./.github/workflows/build-image-reusable.yml
-    with:
-      image_name: sensitive-data-web
-      build_context: ./src/web
-    secrets: inherit

@@ -20,8 +20,8 @@ spec:
       # INSECURE: No pod-level securityContext (runAsNonRoot, seccompProfile, etc.)
       containers:
         - name: web
-          # INSECURE: Using 'latest' tag - no version pinning, unpredictable deployments
-          image: acrdefdemo260312152110.azurecr.io/sensitive-data-web:latest
+          # INSECURE: Image tag is injected at deploy time from the Git release tag
+          image: yourregistry.azurecr.io/sensitive-data-web:__IMAGE_TAG__
           # INSECURE: No imagePullPolicy specified - defaults vary by tag, may use cached vulnerable images
           ports:
             - containerPort: 8080

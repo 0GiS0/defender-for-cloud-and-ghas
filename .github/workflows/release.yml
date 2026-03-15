@@ -1,0 +1,44 @@
+name: 🏷️ Release Images & Deploy
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: Git tag or release version to publish and deploy
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build-api:
+    name: 🐳 Publish API image
+    uses: ./.github/workflows/build-image-reusable.yml
+    with:
+      image_name: sensitive-data-api
+      build_context: ./src/api
+      image_tag: ${{ github.event_name == 'push' && github.ref_name || inputs.image_tag }}
+    secrets: inherit
+
+  build-web:
+    name: 🐳 Publish Web image
+    uses: ./.github/workflows/build-image-reusable.yml
+    with:
+      image_name: sensitive-data-web
+      build_context: ./src/web
+      image_tag: ${{ github.event_name == 'push' && github.ref_name || inputs.image_tag }}
+    secrets: inherit
+
+  deploy:
+    name: 🚀 Deploy tagged release
+    needs:
+      - build-api
+      - build-web
+    uses: ./.github/workflows/deploy.yml
+    with:
+      image_tag: ${{ github.event_name == 'push' && github.ref_name || inputs.image_tag }}
+    secrets: inherit

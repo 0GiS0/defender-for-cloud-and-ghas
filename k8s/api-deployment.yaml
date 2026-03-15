@@ -21,8 +21,8 @@ spec:
       # INSECURE: No hostNetwork/hostPID/hostIPC restrictions explicitly set
       containers:
         - name: api
-          # INSECURE: Using 'latest' tag - no version pinning, unpredictable deployments
-          image: acrdefdemo260312152110.azurecr.io/sensitive-data-api:latest
+          # INSECURE: Image tag is injected at deploy time from the Git release tag
+          image: yourregistry.azurecr.io/sensitive-data-api:__IMAGE_TAG__
           # INSECURE: No imagePullPolicy specified - defaults vary by tag, may use cached vulnerable images
           ports:
             - containerPort: 8080

@@ -1,12 +1,25 @@
 name: 🚀 Deploy to AKS
 
 on:
+  workflow_call:
+    inputs:
+      image_tag:
+        description: Image tag to deploy to Kubernetes
+        required: true
+        type: string
   workflow_dispatch:
+    inputs:
+      image_tag:
+        description: Image tag to deploy to Kubernetes
+        required: true
+        type: string
 
 jobs:
   deploy:
     name: ☸️ Deploy to AKS
     runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{ inputs.image_tag }}
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -46,11 +59,14 @@ jobs:
       - name: 🏷️ Replace image tags in manifests
         run: |
           sed -i "s|yourregistry.azurecr.io|${{ secrets.ACR_LOGIN_SERVER }}|g" k8s/*.yaml
+          sed -i "s|__IMAGE_TAG__|${IMAGE_TAG}|g" k8s/api-deployment.yaml k8s/web-deployment.yaml
           sed -i "s|__API_URL__|${API_URL}|g" k8s/web-deployment.yaml
 
       - name: 🚢 Deploy to AKS
         run: |
           kubectl apply -f k8s/
+          kubectl rollout status deployment/sensitive-data-api -n sensitive-data-app --timeout=180s
+          kubectl rollout status deployment/sensitive-data-web -n sensitive-data-app --timeout=180s
 
       # NOTE: This deployment is intentionally simple for demo purposes.
       # In production you would use proper GitOps (e.g., Flux or Argo CD),

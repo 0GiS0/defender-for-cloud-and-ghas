@@ -1,4 +1,4 @@
-name: Reusable Docker Build
+name: ♻️ Reusable Docker Build
 
 on:
   workflow_call:
@@ -11,9 +11,15 @@ on:
         description: Docker build context
         required: true
         type: string
+      image_tag:
+        description: Image tag to publish
+        required: true
+        type: string
 
 permissions:
   contents: read
+  actions: read
+  security-events: write
 
 jobs:
   build-and-push:
@@ -39,16 +45,25 @@ jobs:
         with:
           images: ${{ secrets.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}
           tags: |
-            type=sha,format=long
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=${{ inputs.image_tag }}
 
       - name: 🏗️ Build and push Docker image
         id: build-push
         uses: docker/build-push-action@v6
         with:
           context: ${{ inputs.build_context }}
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: 🔒 Run Microsoft Security DevOps Analysis
+        id: msdo
+        uses: microsoft/security-devops-action@latest
+
+      - name: 📤 Upload alerts to Security tab
+        if: always() && steps.msdo.outputs.sarifFile != ''
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: ${{ steps.msdo.outputs.sarifFile }}
