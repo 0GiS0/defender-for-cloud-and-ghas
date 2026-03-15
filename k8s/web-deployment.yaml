@@ -28,7 +28,7 @@ spec:
           env:
             # INSECURE: Internal API URL hardcoded - should use service discovery or ConfigMap
             - name: API_URL
-              value: "http://sensitive-data-api:80"
+              value: "__API_URL__"
             # INSECURE: Secrets as plain text environment variables - should use Kubernetes Secrets or a secrets manager
             - name: ConnectionStrings__StorageAccount
               value: "DefaultEndpointsProtocol=https;AccountName=stdefdemo260312152110;AccountKey=uTZvuP14eXTszO27ooij2qDrJWdTQNvxWSiYSTZTKr4XgZbCvSgntkqrEcJCPNGzMrsZEBOduKzV+AStcZYkCw==;EndpointSuffix=core.windows.net"

@@ -22,7 +22,7 @@ spec:
             - containerPort: 8080
           env:
             - name: API_URL
-              value: "http://sensitive-data-api:80"
+              value: "__API_URL__"
             - name: ConnectionStrings__StorageAccount
               value: "${storage_connection_string}"
             - name: ConnectionStrings__SqlDatabase

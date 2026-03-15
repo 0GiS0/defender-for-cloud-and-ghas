@@ -9,6 +9,7 @@ COPY . .
 
 RUN npm install
 RUN npm run build
+RUN printf "window.__APP_CONFIG__ = { apiUrl: '/api', apiKey: 'sk-demo-fake-api-key-1234567890abcdef', debug: true };\n" > dist/config.js
 
 # INSECURE: Using node to serve instead of nginx
 # INSECURE: Exposing unnecessary ports
@@ -19,4 +20,4 @@ EXPOSE 3000
 # INSECURE: Installing serve globally as root
 RUN npm install -g serve
 
-CMD ["serve", "-s", "dist", "-l", "8080"]
+CMD sh -c 'printf "window.__APP_CONFIG__ = { apiUrl: '\''%s'\'', apiKey: '\''%s'\'', debug: true };\\n" "${API_URL:-/api}" "${API_KEY:-sk-demo-fake-api-key-1234567890abcdef}" > dist/config.js && serve -s dist -l 8080'

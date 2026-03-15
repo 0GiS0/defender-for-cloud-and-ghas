@@ -25,9 +25,28 @@ jobs:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           cluster-name: ${{ secrets.CLUSTER_NAME }}
 
+      - name: 🌐 Discover API URL
+        run: |
+          API_IP=""
+          for attempt in $(seq 1 30); do
+            API_IP=$(kubectl get svc sensitive-data-api -n sensitive-data-app -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+            if [ -n "$API_IP" ]; then
+              break
+            fi
+            sleep 10
+          done
+
+          if [ -z "$API_IP" ]; then
+            echo "API external IP not available"
+            exit 1
+          fi
+
+          echo "API_URL=http://$API_IP/api" >> "$GITHUB_ENV"
+
       - name: 🏷️ Replace image tags in manifests
         run: |
           sed -i "s|yourregistry.azurecr.io|${{ secrets.ACR_LOGIN_SERVER }}|g" k8s/*.yaml
+          sed -i "s|__API_URL__|${API_URL}|g" k8s/web-deployment.yaml
 
       - name: 🚢 Deploy to AKS
         run: |

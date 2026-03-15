@@ -74,7 +74,27 @@ YAML
       KUBECONFIG="$kubeconfig_file" kubectl apply \
         -f "$manifest_dir/namespace.yaml" \
         -f "$manifest_dir/api-deployment.yaml" \
-        -f "$manifest_dir/api-service.yaml" \
+        -f "$manifest_dir/api-service.yaml"
+
+      api_ip=""
+      for attempt in $(seq 1 30); do
+        api_ip=$(KUBECONFIG="$kubeconfig_file" kubectl get svc sensitive-data-api -n sensitive-data-app -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+        if [ -n "$api_ip" ]; then
+          break
+        fi
+
+        sleep 10
+      done
+
+      if [ -z "$api_ip" ]; then
+        echo "Failed to resolve public IP for sensitive-data-api service" >&2
+        exit 1
+      fi
+
+      sed -i "s|__API_URL__|http://$api_ip/api|g" "$manifest_dir/web-deployment.yaml"
+
+      KUBECONFIG="$kubeconfig_file" kubectl apply \
         -f "$manifest_dir/web-deployment.yaml" \
         -f "$manifest_dir/web-service.yaml"
 
