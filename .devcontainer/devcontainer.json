@@ -4,10 +4,7 @@
     "dockerfile": "Dockerfile"
   },
   "features": {
-    "ghcr.io/devcontainers/features/copilot-cli:1": {},
-    "ghcr.io/devcontainers/features/azure-cli:1": {},
-    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/copilot-cli:1": {}
   },
   "containerEnv": {
     "ASPNETCORE_ENVIRONMENT": "Development"
@@ -32,8 +29,7 @@
         "dbaeumer.vscode-eslint",
         "ms-azuretools.vscode-docker",
         "ms-dotnettools.csdevkit",
-        "mechatroner.rainbow-csv",
-        "HashiCorp.terraform"
+        "mechatroner.rainbow-csv"
       ]
     }
   }
