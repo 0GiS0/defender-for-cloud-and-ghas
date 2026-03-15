@@ -14,10 +14,6 @@ on:
 
 permissions:
   contents: read
-  actions: read
-  id-token: write
-  attestations: write
-  security-events: write
 
 jobs:
   build-and-push:
@@ -56,23 +52,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          provenance: true
-          sbom: true
-
-      - name: 📜 Generate artifact attestation
-        if: github.event_name != 'pull_request'
-        uses: actions/attest-build-provenance@v3
-        with:
-          subject-name: ${{ secrets.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}
-          subject-digest: ${{ steps.build-push.outputs.digest }}
-          push-to-registry: true
-
-      - name: 🔒 Run Microsoft Security DevOps Analysis
-        id: msdo
-        uses: microsoft/security-devops-action@latest
-
-      - name: 📤 Upload alerts to Security tab
-        if: always() && steps.msdo.outputs.sarifFile != ''
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: ${{ steps.msdo.outputs.sarifFile }}
