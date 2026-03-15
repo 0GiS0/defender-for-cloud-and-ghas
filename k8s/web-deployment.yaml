@@ -31,7 +31,7 @@ spec:
               value: "__API_URL__"
             # INSECURE: Secrets as plain text environment variables - should use Kubernetes Secrets or a secrets manager
             - name: ConnectionStrings__StorageAccount
-              value: "DefaultEndpointsProtocol=https;AccountName=stdefdemo260312152110;AccountKey=uTZvuP14eXTszO27ooij2qDrJWdTQNvxWSiYSTZTKr4XgZbCvSgntkqrEcJCPNGzMrsZEBOduKzV+AStcZYkCw==;EndpointSuffix=core.windows.net"
+              value: "__STORAGE_CONNECTION_STRING__"
             # INSECURE: Database credentials in plain text - should use Kubernetes Secrets or Azure Key Vault
             - name: ConnectionStrings__SqlDatabase
               value: "Server=tcp:sql-demo.database.windows.net;Database=customersdb;User ID=sqladmin;Password=P@ssw0rd123!;"

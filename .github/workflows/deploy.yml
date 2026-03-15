@@ -61,6 +61,7 @@ jobs:
           sed -i "s|yourregistry.azurecr.io|${{ secrets.ACR_LOGIN_SERVER }}|g" k8s/*.yaml
           sed -i "s|__IMAGE_TAG__|${IMAGE_TAG}|g" k8s/api-deployment.yaml k8s/web-deployment.yaml
           sed -i "s|__API_URL__|${API_URL}|g" k8s/web-deployment.yaml
+          sed -i "s|__STORAGE_CONNECTION_STRING__|${{ secrets.STORAGE_CONNECTION_STRING }}|g" k8s/api-deployment.yaml k8s/web-deployment.yaml
 
       - name: 🚢 Deploy to AKS
         run: |
