@@ -22,18 +22,18 @@ jobs:
       IMAGE_TAG: ${{ inputs.image_tag }}
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
 
       - name: 🔐 Log in to Azure
-        uses: azure/login@v2
+        uses: azure/login@v2.3.0
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: 🛠️ Set up kubectl
-        uses: azure/setup-kubectl@v3
+        uses: azure/setup-kubectl@v4.0.1
 
       - name: 🔐 Get AKS credentials
-        uses: azure/aks-set-context@v3
+        uses: azure/aks-set-context@v4.0.3
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           cluster-name: ${{ secrets.CLUSTER_NAME }}

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdc-ghas-mock
+  namespace: sensitive-data-app
+  labels:
+    app: mdc-ghas-mock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mdc-ghas-mock
+  template:
+    metadata:
+      labels:
+        app: mdc-ghas-mock
+    spec:
+      containers:
+        - name: mdc-ghas-mock
+          image: acrcontosopaydemo260315.azurecr.io/mdc-ghas-mock-0001:mdc-ghas-integration
+          imagePullPolicy: Always
