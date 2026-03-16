@@ -20,6 +20,8 @@ permissions:
   contents: read
   actions: read
   security-events: write
+  id-token: write
+  attestations: write
 
 jobs:
   build-and-push:
