@@ -22,6 +22,7 @@ permissions:
   security-events: write
   id-token: write
   attestations: write
+  artifact-metadata: write
 
 jobs:
   build-and-push:
@@ -80,8 +81,32 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          jq -n --arg artifactName "${{ inputs.image_name }}" --arg artifactVersion "${{ inputs.image_tag }}" --arg artifactDigest "${{ steps.build-push.outputs.digest }}" --arg registryUrl "https://${{ secrets.ACR_LOGIN_SERVER }}/" '{"name": $artifactName, "digest": $artifactDigest, "version": $artifactVersion, "registry_url": $registryUrl, "repository": "${{ inputs.image_name }}"}' > create-record.json
-          gh api -X POST orgs/${{ github.repository_owner }}/artifacts/metadata/storage-record --input create-record.json
+          jq -n \
+            --arg artifactName "${{ inputs.image_name }}" \
+            --arg artifactVersion "${{ inputs.image_tag }}" \
+            --arg artifactDigest "${{ steps.build-push.outputs.digest }}" \
+            --arg registryUrl "https://${{ secrets.ACR_LOGIN_SERVER }}/" \
+            --arg repository "${{ inputs.image_name }}" \
+            --arg githubRepository "${{ github.repository }}" \
+            '{"name": $artifactName, "digest": $artifactDigest, "version": $artifactVersion, "registry_url": $registryUrl, "repository": $repository, "github_repository": $githubRepository}' > create-record.json
+
+          for attempt in 1 2 3 4 5; do
+            if gh api \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2026-03-10" \
+              "orgs/${{ github.repository_owner }}/artifacts/metadata/storage-record" \
+              --input create-record.json; then
+              exit 0
+            fi
+
+            if [ "$attempt" -eq 5 ]; then
+              exit 1
+            fi
+
+            echo "Storage record not ready yet; retrying in $((attempt * 10))s..."
+            sleep $((attempt * 10))
+          done
         shell: bash
 
 
@@ -102,7 +127,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Image Details" >> $GITHUB_STEP_SUMMARY
           echo "- **Registry**: \`${{ secrets.ACR_LOGIN_SERVER }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **Image**: \`${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Image**: \`${{ inputs.image_name }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Digest**: \`${{ steps.build-push.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Tags" >> $GITHUB_STEP_SUMMARY

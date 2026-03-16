@@ -17,6 +17,7 @@ permissions:
   security-events: write
   id-token: write
   attestations: write
+  artifact-metadata: write
 
 jobs:
   resolve-tag:
