@@ -87,8 +87,7 @@ jobs:
             --arg artifactDigest "${{ steps.build-push.outputs.digest }}" \
             --arg registryUrl "https://${{ secrets.ACR_LOGIN_SERVER }}/" \
             --arg repository "${{ inputs.image_name }}" \
-            --arg githubRepository "${{ github.repository }}" \
-            '{"name": $artifactName, "digest": $artifactDigest, "version": $artifactVersion, "registry_url": $registryUrl, "repository": $repository, "github_repository": $githubRepository}' > create-record.json
+            '{"name": $artifactName, "digest": $artifactDigest, "version": $artifactVersion, "registry_url": $registryUrl, "repository": $repository}' > create-record.json
 
           for attempt in 1 2 3 4 5; do
             if gh api \
@@ -96,11 +95,17 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "X-GitHub-Api-Version: 2026-03-10" \
               "orgs/${{ github.repository_owner }}/artifacts/metadata/storage-record" \
-              --input create-record.json; then
+              --input create-record.json 2>gh-error.log; then
               exit 0
             fi
 
+            if ! grep -q "HTTP 404" gh-error.log; then
+              cat gh-error.log
+              exit 1
+            fi
+
             if [ "$attempt" -eq 5 ]; then
+              cat gh-error.log
               exit 1
             fi
 
