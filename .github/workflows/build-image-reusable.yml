@@ -67,7 +67,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: actions/attest-build-provenance@v4.1.0
         with:
-          subject-name: ${{ secrets.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}@${{ steps.build-push.outputs.digest }}
+          subject-name: ${{ secrets.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}
           subject-digest: ${{ steps.build-push.outputs.digest }}
           push-to-registry: true
 
