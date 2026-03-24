@@ -1,12 +1,21 @@
 # 🛡️ Defender for Cloud & GitHub Advanced Security - Demo
 
+🌍 **[English](README.en.md)** | Español
+
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC140iBrEZbOtvxWsJ-Tb0lQ?style=for-the-badge&logo=youtube&logoColor=white&color=red)](https://www.youtube.com/c/GiselaTorres?sub_confirmation=1) [![GitHub followers](https://img.shields.io/github/followers/0GiS0?style=for-the-badge&logo=github&logoColor=white)](https://github.com/0GiS0) [![LinkedIn Follow](https://img.shields.io/badge/LinkedIn-Sígueme-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/giselatorresbuitrago/) [![X Follow](https://img.shields.io/badge/X-Sígueme-black?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/0GiS0)
 
 ---
 
 ¡Hola developer 👋🏻! Este repositorio es una demo de integración entre **Microsoft Defender for Cloud** y **GitHub Advanced Security (GHAS)** para detección de vulnerabilidades end-to-end: desde el código fuente hasta la infraestructura en Azure.
 
+Este proyecto implementa los pasos descritos en la guía oficial de Microsoft:
+📖 **[Implementación de la integración de Advanced Security de GitHub con Microsoft Defender for Cloud](https://learn.microsoft.com/es-es/azure/defender-for-cloud/github-advanced-security-deploy)**
+
 ⚠️ **ADVERTENCIA**: Este repositorio contiene código y configuraciones **intencionalmente vulnerables** con fines educativos y de demostración. **NO utilizar en producción.**
+
+<a href="https://youtu.be/BomDSi3UW5o">
+ <img src="https://img.youtube.com/vi/BomDSi3UW5o/maxresdefault.jpg" alt="Defender for Cloud & GitHub Advanced Security" width="100%" />
+</a>
 
 ---
 
@@ -17,6 +26,7 @@ Demostrar cómo la combinación de **GitHub Advanced Security (GHAS)** y **Micro
 - **Shift-Left (GHAS)**: Detectar vulnerabilidades en el código fuente, dependencias y secretos _antes_ de llegar a producción.
 - **Runtime & CSPM (Defender for Cloud)**: Identificar misconfiguraciones en la infraestructura cloud, vulnerabilidades en contenedores y exposición de datos sensibles _en tiempo de ejecución_.
 - **Visión unificada**: Correlacionar hallazgos de ambas herramientas para priorizar remediación basada en riesgo real.
+- **Code-to-Cloud**: Vincular alertas de código a recursos en la nube, crear campañas de seguridad en GitHub con contexto de runtime, y cerrar el bucle entre equipos de seguridad e ingeniería.
 
 ---
 

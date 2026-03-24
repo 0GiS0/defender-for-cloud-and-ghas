@@ -1,5 +1,5 @@
 {
-  "name": "defender-for-cloud-and-ghas",
+  "name": "🛡️ Defender for Cloud & GHAS",
   "build": {
     "dockerfile": "Dockerfile"
   },
@@ -14,11 +14,11 @@
   "forwardPorts": [5000, 8080],
   "portsAttributes": {
     "5000": {
-      "label": "Sensitive Data API",
+      "label": "🔌 Sensitive Data API",
       "onAutoForward": "notify"
     },
     "8080": {
-      "label": "Sensitive Data Web",
+      "label": "🌐 Sensitive Data Web",
       "onAutoForward": "notify"
     }
   },
