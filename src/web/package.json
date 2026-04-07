@@ -16,7 +16,7 @@
     "dompurify": "2.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "vite": "^4.0.0"
+    "@vitejs/plugin-vue": "^6.0.5",
+    "vite": "^8.0.6"
   }
 }
